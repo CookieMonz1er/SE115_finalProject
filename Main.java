@@ -34,8 +34,9 @@ public class Main {
                     try {
                         day = Integer.parseInt(x[0].trim());
                         profit = Integer.parseInt(x[2].trim());
-                    } catch (NumberFormatException ex) {                            // Check in order not to get "NumberFormatException"
-                        // day - profit is not a valid integer, skip this line.
+                    } catch (
+                            NumberFormatException ex) {                            // Check in order not to get "NumberFormatException"
+                        // Day/profit is not a valid integer, skip this line.
                         continue;
                     }
 
@@ -132,7 +133,7 @@ public class Main {
         return sum;
     }
 
-    public static int bestDayOfMonth(int month) {   // Return sthe day (1-28) with the highest total profit.
+    public static int bestDayOfMonth(int month) {   // Returns the day (1-28) with the highest total profit.
 
         int topDay = 1;
         if (month < 0 || month >= MONTHS) {
@@ -216,7 +217,7 @@ public class Main {
     }
 
 
-    public static int daysAboveThreshold(String comm, int threshold) {      // Returns the number of days where profit > threshold.
+    public static int daysAboveThreshold(String comm, int threshold) {      // Returns the number of days when profit > threshold.
         int commIndex = -1;
 
         for (int i = 0; i < COMMS; i++) {
@@ -303,11 +304,13 @@ public class Main {
 
 
     public static String bestWeekOfMonth(int month) {       // Returns which week (1-4) has the highest profit for the selected month.
-        int bestWeek = 1;
-        int bestSum = 0;
         if (month < 0 || month >= MONTHS) {
             return "INVALID_MONTH";              //Invalid month
         }
+
+        int bestWeek = 1;
+        int bestSum = 0;
+
         for (int d = 0; d < 7; d++) {                   // I wasn't sure if we were allowed to use Integer.MIN_VALUE. So I decided not to take my chances.
             for (int c = 0; c < COMMS; c++) {           //  Getting the first week as a starting point just in case a negative number doesn't break the code.
                 bestSum += profits[month][d][c];
