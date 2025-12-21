@@ -181,10 +181,6 @@ public class Main {
     }
 
 
-
-
-
-
     public static int consecutiveLossDays(String comm) {
         int commIndex = -1;
 
@@ -199,16 +195,15 @@ public class Main {
         int currentStreak = 0;
         int longestStreak = 0;
 
-        for(int m = 0; m < MONTHS; m++){
-            for(int d = 0; d < DAYS; d++){
-                if (profits[m][d][commIndex] < 0){
+        for (int m = 0; m < MONTHS; m++) {
+            for (int d = 0; d < DAYS; d++) {
+                if (profits[m][d][commIndex] < 0) {
                     currentStreak++;
-                }
-                else  {
+                } else {
                     currentStreak = 0;
                 }
 
-                if(currentStreak > longestStreak){
+                if (currentStreak > longestStreak) {
                     longestStreak = currentStreak;
                 }
 
@@ -216,10 +211,6 @@ public class Main {
         }
         return longestStreak;
     }
-
-
-
-
 
 
     public static int daysAboveThreshold(String comm, int threshold) {
@@ -248,8 +239,35 @@ public class Main {
 
 
     public static int biggestDailySwing(int month) {
-        return 1234;
+        if (month < 0 || month >= MONTHS) {
+            return -99999;              // Invalid month
+        }
+        int maxDiff = 0;
+
+
+        for (int d = 0; d < DAYS - 1; d++) {            //Stopping at d < DAYS-1 because we are accessing d+1.
+
+
+            int totalToday = 0;
+            int totalTomorrow = 0;
+
+            for (int c = 0; c < COMMS; c++) {
+                totalToday += profits[month][d][c];
+                totalTomorrow += profits[month][d + 1][c];
+            }
+            int diff = totalTomorrow - totalToday;
+            if (diff < 0) {
+                diff = -diff;                           //Daily swing is defined as |totalTomorrow - totalToday|.
+            }
+            if (diff > maxDiff) {
+                maxDiff = diff;
+            }
+
+        }
+
+        return maxDiff;
     }
+
 
     public static String compareTwoCommodities(String c1, String c2) {
         return "DUMMY is better by 1234";
