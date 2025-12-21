@@ -88,7 +88,7 @@ public class Main {
         return commodities[bestCommodityIndex] + " " + bestTotal;
     }
 
-    public static int totalProfitOnDay(int month, int day) {            //
+    public static int totalProfitOnDay(int month, int day) {
         if (month < 0 || month >= MONTHS || day < 1 || day > DAYS) {
             return -99999;          //Invalid input
         }
@@ -131,7 +131,7 @@ public class Main {
         return sum;
     }
 
-    public static int bestDayOfMonth(int month) {               //
+    public static int bestDayOfMonth(int month) {
         int topDay = 1;
         if (month < 0 || month >= MONTHS) {
             return -1;              //Invalid month
@@ -180,13 +180,72 @@ public class Main {
         return months[bestMonth];       //Returns name
     }
 
+
+
+
+
+
     public static int consecutiveLossDays(String comm) {
-        return 1234;
+        int commIndex = -1;
+
+        for (int i = 0; i < COMMS; i++) {
+            if (commodities[i].equals(comm)) {
+                commIndex = i;
+                break;
+            }
+        }
+        if (commIndex == -1) return -1;
+
+        int currentStreak = 0;
+        int longestStreak = 0;
+
+        for(int m = 0; m < MONTHS; m++){
+            for(int d = 0; d < DAYS; d++){
+                if (profits[m][d][commIndex] < 0){
+                    currentStreak++;
+                }
+                else  {
+                    currentStreak = 0;
+                }
+
+                if(currentStreak > longestStreak){
+                    longestStreak = currentStreak;
+                }
+
+            }
+        }
+        return longestStreak;
     }
 
+
+
+
+
+
     public static int daysAboveThreshold(String comm, int threshold) {
-        return 1234;
+        int commIndex = -1;
+
+        for (int i = 0; i < COMMS; i++) {
+            if (commodities[i].equals(comm)) {
+                commIndex = i;
+                break;
+            }
+        }
+        if (commIndex == -1) {
+            return -1;
+        }
+
+        int count = 0;
+        for (int m = 0; m < MONTHS; m++) {
+            for (int d = 0; d < DAYS; d++) {
+                if (profits[m][d][commIndex] > threshold) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
+
 
     public static int biggestDailySwing(int month) {
         return 1234;
@@ -203,6 +262,5 @@ public class Main {
     public static void main(String[] args) {
         loadData();
         System.out.println("Data loaded – ready for queries");
-        System.out.println(bestMonthForCommodity("gold"));                          //sil
     }
 }
