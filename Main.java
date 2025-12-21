@@ -270,12 +270,65 @@ public class Main {
 
 
     public static String compareTwoCommodities(String c1, String c2) {
-        return "DUMMY is better by 1234";
+        int c1Index = -1, c2Index = -1;
+        for (int i = 0; i < COMMS; i++) {
+            if (commodities[i].equals(c1)) c1Index = i;
+            if (commodities[i].equals(c2)) c2Index = i;
+        }
+        if (c1Index == -1 || c2Index == -1) {
+            return "INVALID_COMMODITY";
+        }
+        int sum1 = 0;
+        int sum2 = 0;
+
+        for (int m = 0; m < MONTHS; m++) {
+            for (int d = 0; d < DAYS; d++) {
+                sum1 += profits[m][d][c1Index];
+                sum2 += profits[m][d][c2Index];
+            }
+        }
+        if (sum1 == sum2) {
+            return "Equal";
+        }
+        if (sum1 > sum2) {
+            return c1 + " is better by " + (sum1 - sum2);
+        } else {
+            return c2 + " is better by " + (sum2 - sum1);
+        }
+
     }
 
+
     public static String bestWeekOfMonth(int month) {
-        return "DUMMY";
+        int bestWeek = 1;
+        int bestSum = 0;
+        if (month < 0 || month >= MONTHS) {
+            return "INVALID_MONTH";              //Invalid month
+        }
+        for (int d = 0; d < 7; d++) {
+            for (int c = 0; c < COMMS; c++) {
+                bestSum += profits[month][d][c];
+            }
+        }
+        for (int week = 1; week < 4; week++) {
+
+            int initialDayIndex = week * 7;
+            int weekSum = 0;
+
+            for (int d = initialDayIndex; d < initialDayIndex + 7; d++) {
+                for (int c = 0; c < COMMS; c++) {
+                    weekSum += profits[month][d][c];
+                }
+
+            }
+            if (weekSum > bestSum) {
+                bestSum = weekSum;
+                bestWeek = week + 1;
+            }
+        }
+        return "Week " + bestWeek;
     }
+
 
     public static void main(String[] args) {
         loadData();
